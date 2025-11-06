@@ -14,6 +14,7 @@ from django.core.mail import EmailMultiAlternatives
 import simplejson as json
 from email.mime.image import MIMEImage
 from django.conf import settings
+from django.http import JsonResponse
 stripe.api_key = "sk_test_2510"
 
 # from django.db import connection
@@ -583,3 +584,7 @@ def random_with_N_digits(n):
     range_start = 10**(n-1)
     range_end = (10**n)-1
     return str(randint(range_start, range_end))
+
+def healthz(request):
+    version = os.environ.get('APP_VERSION', '0.0.0')
+    return JsonResponse({'status': 'ok', 'version': version})
